@@ -1,0 +1,42 @@
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE settings
+.idea/
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Model checkpoints
+checkpoints/*.pth
+checkpoints/*.pt
+
+# Dataset files
+dataset/
+
+# ZIP archives and backups
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+
+# Temporary and log files
+*.log
+*.tmp
+
+# Local environment variables and secrets
+.env
+.env.*
