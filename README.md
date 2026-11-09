@@ -31,6 +31,7 @@ The dataset contains 150 knee X-ray images.
 | Separate test set | 50 | No |
 
 The 100 annotated development images are divided into:
+
 - 80 training images.
 - 20 validation images.
 
@@ -47,15 +48,19 @@ The project uses U-Net, a convolutional neural network architecture designed for
 The architecture consists of four main components:
 
 ### Encoder
+
 Extracts image features through convolutional layers and downsampling.
 
 ### Bottleneck
+
 Captures deeper and more complex image features.
 
 ### Decoder
+
 Reconstructs spatial information and generates the segmentation output.
 
 ### Skip Connections
+
 Transfer information from encoder layers to corresponding decoder layers. This helps preserve spatial details and improve segmentation boundaries.
 
 ### Model Configuration
@@ -71,7 +76,7 @@ Transfer information from encoder layers to corresponding decoder layers. This h
 ```text
 segmentation_project/
 │
-├── dataset/
+├── dataset/                         # Local dataset (not uploaded)
 │   ├── xrays/
 │   ├── masks/
 │   └── CSVs/
@@ -93,7 +98,7 @@ segmentation_project/
 │       ├── sample_3.png
 │       └── sample_4.png
 │
-├── checkpoints/
+├── checkpoints/                     # Local model checkpoints
 │
 ├── args.py
 ├── create_csv.py
@@ -104,6 +109,7 @@ segmentation_project/
 ├── plot_csv_counts.py
 ├── trainer.py
 ├── utils.py
+├── visualize_only.py
 │
 ├── dataset_split_bar_chart.png
 ├── requirements.txt
@@ -111,7 +117,7 @@ segmentation_project/
 └── README.md
 ```
 
-**Note:** The dataset and checkpoint directories are excluded from the public repository through `.gitignore`.
+**Note:** The dataset and checkpoint directories are excluded from the public repository through `.gitignore`. They must be available locally when running the project.
 
 ## 6. Technologies and Libraries
 
@@ -129,7 +135,7 @@ segmentation_project/
 ### Clone the repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/adjalili/segmentation_project.git
 cd segmentation_project
 ```
 
@@ -205,7 +211,35 @@ The main pipeline performs the following steps:
 8. Creates validation visualizations.
 9. Generates predictions for separate test images.
 
-## 10. Training Results
+## 10. Regenerating Validation Visualizations Without Training
+
+The project also includes `visualize_only.py`.
+
+This script allows validation visualizations to be regenerated using the previously trained model checkpoint without running the training process again.
+
+Run:
+
+```bash
+python visualize_only.py
+```
+
+The script performs the following steps:
+
+1. Loads the validation dataset.
+2. Initializes the U-Net architecture.
+3. Loads the previously saved `best_model.pth` checkpoint.
+4. Generates five validation comparison images.
+5. Saves the images in `results/validation/`.
+
+The script does not call the training function and does not modify the original `main.py`.
+
+**Requirement:** The trained checkpoint must exist locally at:
+
+```text
+checkpoints/best_model.pth
+```
+
+## 11. Training Results
 
 The completed 50-epoch training experiment achieved the following result:
 
@@ -231,7 +265,7 @@ A Dice score of 1.0 represents perfect overlap, while 0.0 represents no overlap.
 
 **The reported 98.72% is the best validation Dice score. It is not a test-set result.**
 
-## 11. Validation Segmentation Results
+## 12. Validation Segmentation Results
 
 The following examples show the model's predictions on five validation images.
 
@@ -257,7 +291,7 @@ Each visualization compares the original X-ray, ground-truth femur mask, predict
 
 ![Validation Sample 4](results/validation/sample_4.png)
 
-## 12. Test Predictions
+## 13. Test Predictions
 
 The trained model is also used to generate predictions for the separate test X-ray images.
 
@@ -277,7 +311,7 @@ Example prediction files:
 
 **Important:** The 50 separate test images do not have ground-truth masks. Therefore, these images show model predictions only. A genuine test Dice score cannot be calculated without corresponding ground-truth masks.
 
-## 13. Limitations
+## 14. Limitations
 
 - The annotated development dataset contains only 100 images.
 - The model is evaluated using the 20-image validation set.
@@ -286,7 +320,7 @@ Example prediction files:
 - The model's predictions require visual inspection.
 - This project is educational and is not intended for clinical diagnosis.
 
-## 14. Future Improvements
+## 15. Future Improvements
 
 Possible improvements include:
 
@@ -297,7 +331,7 @@ Possible improvements include:
 - Comparing U-Net with other segmentation architectures.
 - Evaluating on an independently annotated test dataset.
 
-## 15. Author and Course
+## 16. Author and Course
 
 **Project:** Knee X-ray Femur Segmentation Using U-Net
 
